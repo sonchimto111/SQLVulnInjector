@@ -2,7 +2,7 @@
 
 # ☠️ SQLVulnInjector ☠️
 
-![License](https://img.shields.io/github/license/YOUR_USERNAME/SQLVulnInjector?color=blueviolet&style=for-the-badge)
+![License](https://img.shields.io/github/license/ashfiexe/SQLVulnInjector?color=blueviolet&style=for-the-badge)
 ![Language](https://img.shields.io/badge/Language-PHP-777BB4?style=for-the-badge&logo=php&logoColor=white)
 ![Database](https://img.shields.io/badge/Database-SQLite-003B57?style=for-the-badge&logo=sqlite&logoColor=white)
 ![Topic](https://img.shields.io/badge/Topic-SQL_Injection-red?style=for-the-badge&logo=databricks&logoColor=white)
@@ -45,7 +45,7 @@ Unlike most SQL injection tutorials that just *simulate* strings or require you 
 No complex setups required. Just a standard PHP environment.
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/SQLVulnInjector.git
+git clone https://github.com/ashfiexe/SQLVulnInjector.git
 cd SQLVulnInjector
 # Serve with PHP's built-in robust server
 php -S localhost:8000
@@ -170,7 +170,7 @@ SQLVulnInjector/
 ## ⚡ Quick Start (Zero Config)
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/SQLVulnInjector.git
+git clone https://github.com/ashfiexe/SQLVulnInjector.git
 cd SQLVulnInjector
 # Serve using PHP's built-in robust server, explicitly pointing to the public directory
 php -S localhost:8000 -t public
@@ -190,7 +190,7 @@ This project is for **educational and research purposes only**. All demonstratio
 
 ## 📜 License
 
-MIT © [Salehin Ashfi](https://github.com/ashfiexe)
+MIT © [ashfiexe](https://github.com/ashfiexe)
 
 ---
 
