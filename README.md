@@ -1,66 +1,87 @@
-# SQL Injection
+<div align="center">
 
-[![License](https://img.shields.io/github/license/adamalston/SQL-Injection?color=black)](LICENSE)
+# ☠️ SQLVulnInjector ☠️
 
-A SQL Injection attack consists of the insertion or injection of a SQL query via the input data from the client to the application. A successful SQL injection exploit can read sensitive data from the database, modify database data (Insert/Update/Delete), execute administration operations on the database (such as shutdown the DBMS), recover the content of a given file present on the DBMS file system and in some cases issue commands to the operating system. SQL injection attacks are a type of injection attack, in which SQL commands are injected into data-plane input to affect the execution of predefined SQL commands.
+![License](https://img.shields.io/github/license/YOUR_USERNAME/SQLVulnInjector?color=blueviolet&style=for-the-badge)
+![Language](https://img.shields.io/badge/Language-PHP-777BB4?style=for-the-badge&logo=php&logoColor=white)
+![Database](https://img.shields.io/badge/Database-SQLite-003B57?style=for-the-badge&logo=sqlite&logoColor=white)
+![Topic](https://img.shields.io/badge/Topic-SQL_Injection-red?style=for-the-badge&logo=databricks&logoColor=white)
 
-SQL injection attacks allow attackers to spoof identity, tamper with existing data, cause repudiation issues such as voiding transactions or changing balances, allow the complete disclosure of all data on the system, destroy the data or make it otherwise unavailable, and become administrators of the database server.
+> A state-of-the-art, visually stunning interactive laboratory for ethical hackers and penetration testers. **100% Zero-Configuration**. Built with an attacker's mindset, documented for defenders.
 
-SQL injection is common with PHP (this repo has a PHP SQL injection implementation) and ASP applications due to the prevalence of older functional interfaces. Due to the nature of programmatic interfaces available, Java and <span>ASP.NET</span> applications are less likely to have easily exploited SQL injections.
+</div>
 
-The severity of SQL injection attacks is limited by the attacker’s skill and imagination, and to a lesser extent, defense in depth countermeasures, such as low privilege connections to the database server and so on. In general, consider SQL injection a high impact severity.
+---
 
-## Normal Backend Interaction
+## 📌 What is SQL Injection?
 
-When prompted by an application, a user enters:
+SQL Injection (SQLi) is an attack technique where malicious SQL code is inserted into an input field to manipulate backend database queries. A successful exploit can allow an attacker to:
 
-**username:** `JohnDoe`
+- 📖 Read sensitive data from the database
+- ✏️ Modify records (Insert / Update / Delete)
+- 🛑 Execute admin-level database operations (e.g. shutdown)
+- 📂 Recover files from the server filesystem
+- 💻 In some cases, execute OS-level commands
 
-**password:** `password`
+SQLi is especially prevalent in **PHP** and **ASP** applications due to older functional interfaces. Java and ASP.NET apps are comparatively less vulnerable due to safer programmatic interfaces — but not immune.
 
-The application processes the input:
-```python
-username = getRequestString("username")
-password = getRequestString("userpassword")
+> ⚠️ Severity is limited only by the attacker's skill and imagination. Consider SQL Injection a **high impact** vulnerability.
 
-sql = 'SELECT * FROM Users WHERE name ="' + username + '" AND pass = "' + password + '"'
+---
+
+## 🎯 Why This Lab is 10x Better (Features)
+
+Unlike most SQL injection tutorials that just *simulate* strings or require you to set up bulky Docker/MySQL containers, **SQLVulnInjector uses a real, auto-generating SQLite database engine**.
+
+- **Zero Configuration**: No XAMPP, no Docker, no MySQL setup required. Just run PHP. The lab generates a real `database.sqlite` file on the fly.
+- **100% Authentic Execution**: Every single payload you enter is executed natively by the SQLite engine. If your payload is malformed, you fail. If it's brilliant, you succeed.
+- **Mini-CTF (Capture The Flag)**: The auto-generated database includes a hidden `secret_flags` table. Your ultimate goal across the scenarios is to use `UNION SELECT` and Blind SQLi techniques to extract these flags!
+- **Glassmorphic UI**: A dark, glowing interface that visualizes exactly how your payload manipulates the backend query in real-time.
+
+---
+
+## 🚀 Quick Start (Zero Config)
+
+No complex setups required. Just a standard PHP environment.
+
+```bash
+git clone https://github.com/YOUR_USERNAME/SQLVulnInjector.git
+cd SQLVulnInjector
+# Serve with PHP's built-in robust server
+php -S localhost:8000
 ```
 
-Database query:
+Navigate to `http://localhost:8000/`. The lab will instantly build the database and you are ready to hack.
 
-```sql
-SELECT * FROM users WHERE name = "JohnDoe" AND pass = "password"
-```
+## 💣 Attack Vectors
 
-## Example Attacks
+### 1. Dump an Entire Table
 
-### 1. Return an Entire Table
+**Goal:** Bypass authentication and extract all user credentials.
 
-A malicious party may get access to usernames and passwords in a database.
-
-A user enters:
-
-**username:** `" OR ""="`
-
-**password:** `" OR ""="`
+| Field | Malicious Input |
+|-------|----------------|
+| Username | `" OR ""="` |
+| Password | `" OR ""="` |
 
 Query becomes:
 
-```SQL
+```sql
 SELECT * FROM users WHERE name = "" OR ""="" AND pass = "" OR ""=""
 ```
 
-This SQL statement will return all rows from the users table since `OR ""=""` always evaluates to true.
+`OR ""=""` always evaluates to **true** — returns every row in the table.
 
-### 2. Delete a Table Using a Batched SQL Statements
+---
 
-A malicious party may delete an entire table from a database.
+### 2. Drop a Table via Batched Statements
 
-A user enters:
+**Goal:** Permanently destroy a table using stacked queries.
 
-**username:** `nuclearfusion; DROP TABLE Suppliers`
-
-**password:** `password`
+| Field | Malicious Input |
+|-------|----------------|
+| Username | `nuclearfusion; DROP TABLE Suppliers` |
+| Password | `password` |
 
 Query becomes:
 
@@ -68,11 +89,33 @@ Query becomes:
 SELECT * FROM users WHERE username = "nuclearfusion"; DROP TABLE stockPortfolio;
 ```
 
-This SQL statement will result in the permanent deletion (`DROP TABLE` is an automatically committed statement whereas `DELETE` is not and can be rolled back) of the stockPortfolio table's data and structure from the database.
+`DROP TABLE` is an **auto-committed** statement — unlike `DELETE`, it cannot be rolled back. The data and table structure are gone permanently.
 
-## Prevention/Protection
+---
 
-SQL parameters can be used to protect a website from SQL injection. SQL parameters are values that are added to a SQL query at the time of execution.
+### 3. `getdata-prepare.php` (Level 3: Prepared Statements) 🔴
+The ultimate, industry-standard defense. Parameters are treated strictly as variable data, not executable SQL code. Try your hardest payloads here—they will fail to alter the query logic.
+
+---
+
+## 🔮 Advanced & Modern Scenarios
+
+### 4. `getdata-blind.php` (Blind SQLi / Time-Based) 🥷
+The server hides all database errors and does not return the actual tables rows. To extract data, an attacker is forced to ask the database True/False questions (Boolean Blind). To measure time delays in SQLite, attackers can use heavy computational functions like `randomblob()`.
+**Try injecting:** `' AND (SELECT randomblob(1000000000)) --`
+
+### 5. `getdata-second-order.php` (Second-Order SQLi) 💣
+Shows how a payload can be safely inserted into the database using prepared statements, only to detonate later when an unsuspecting admin script or background job reads that exact stored payload and injects it unsafely into a *second* query. Can you extract the `secret_flags` from here?
+
+### 6. `getdata-json.php` (JSON Structure Injection) 🌐
+Modern REST APIs receive JSON objects. This simulation takes a raw JSON string. Break the JSON schema to construct a malicious query.
+**Try injecting:** `{"user_id": "1' UNION SELECT id, flag_name, flag_value FROM secret_flags --"}`
+
+---
+
+## 🛡️ Prevention — Parameterized Queries
+
+SQL parameters treat all user input as **literal values**, never as executable SQL. They are added to the query at execution time, not during construction.
 
 ```python
 name = getRequestString("PatientName")
@@ -80,14 +123,12 @@ addr = getRequestString("Address")
 city = getRequestString("City")
 zipc = getRequestString("Zip")
 
-txtSQL = "INSERT INTO Patients (PatientName,Address,City,Zip) Values(@0,@1,@2,@3)"
+txtSQL = "INSERT INTO Patients (PatientName,Address,City,Zip) VALUES(@0,@1,@2,@3)"
 
-db.Execute(txtSQL,name,addr,city,zipc)
+db.Execute(txtSQL, name, addr, city, zipc)
 ```
 
-The SQL engine checks each parameter to ensure that it is valid for its column. All parameters are treated literally and not as part of the SQL to be executed.
-
-In PHP:
+In PHP using PDO:
 
 ```php
 $stmt = $dbh->prepare("INSERT INTO Patients (PatientName,Address,City,Zip) VALUES (:name, :addr, :city, :zipc)");
@@ -100,8 +141,59 @@ $stmt->bindParam(':zipc', $zipc);
 $stmt->execute();
 ```
 
+The SQL engine validates each parameter against its expected column type. Injected SQL is treated as a string — not executed.
+
 ---
 
-Includes decription snippets from OWASP on SQL Injections.
+## 📁 Repo Structure
 
-Thank you for your interest, this project was fun to work on!
+```
+SQLVulnInjector/
+├── api/
+│   ├── setup-db.php             # Auto-generates the SQLite database & CTF flags
+│   ├── getdata.php              # Level 1: Raw Injection
+│   ├── getdata-encoding.php     # Level 2: Encoding Bypass
+│   ├── getdata-prepare.php      # Level 3: Parameterized (Safe)
+│   ├── getdata-blind.php        # Level 4: Time-Based / Blind
+│   ├── getdata-second-order.php # Level 5: Second-Order 
+│   ├── getdata-json.php         # Level 6: JSON Structure Injection
+│   └── database.sqlite          # Auto-generated by setup-db.php
+├── public/
+│   ├── index.html               # Main laboratory interface
+│   ├── style.css                # Glassmorphism styling
+│   └── script.js                # Frontend API interaction logic
+└── README.md
+```
+
+---
+
+## ⚡ Quick Start (Zero Config)
+
+```bash
+git clone https://github.com/YOUR_USERNAME/SQLVulnInjector.git
+cd SQLVulnInjector
+# Serve using PHP's built-in robust server, explicitly pointing to the public directory
+php -S localhost:8000 -t public
+```
+
+Navigate to `http://localhost:8000/`. The lab will instantly build the database and you are ready to hack.
+
+> Tested in a local environment. **Never deploy on a public server.**
+
+---
+
+## ⚠️ Disclaimer
+
+This project is for **educational and research purposes only**. All demonstrations are conducted in an isolated local environment. Unauthorized use of these techniques against systems you do not own is illegal. The author bears no responsibility for misuse.
+
+---
+
+## 📜 License
+
+MIT © [Salehin Ashfi](https://github.com/ashfiexe)
+
+---
+
+<div align="center">
+  <sub>Built with curiosity. Documented for defenders.</sub>
+</div>

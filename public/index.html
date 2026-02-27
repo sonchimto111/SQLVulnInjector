@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SQLVulnInjector</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="hologram-background"></div>
+    <header>
+        <div class="logo">
+            <span class="logo-icon">&#9888;</span>
+            <h1>SQLVulnInjector</h1>
+        </div>
+        <p class="subtitle">Interactive SQL Injection Vulnerability Laboratory</p>
+    </header>
+
+    <main class="container">
+        <section class="panel control-panel glass">
+            <h2>Injection Payload</h2>
+            <form id="injection-form">
+                <div class="form-group">
+                    <label for="endpoint">Target Endpoint</label>
+                    <div class="select-wrapper">
+                        <select id="endpoint" name="endpoint">
+                            <option value="api/getdata.php">Raw Injection (api/getdata.php)</option>
+                            <option value="api/getdata-encoding.php">Encoded (api/getdata-encoding.php)</option>
+                            <option value="api/getdata-prepare.php">Parameterized (api/getdata-prepare.php)</option>
+                            <option value="api/getdata-blind.php" style="color: #a78bfa;">Blind / Time-Based
+                                (api/getdata-blind.php)</option>
+                            <option value="api/getdata-second-order.php" style="color: #a78bfa;">Second-Order
+                                (api/getdata-second-order.php)</option>
+                            <option value="api/getdata-json.php" style="color: #a78bfa;">JSON Structure
+                                (api/getdata-json.php)
+                            </option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="pid">PID (User ID)</label>
+                    <input type="text" id="pid" name="pid" value="1" placeholder="e.g. 1" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="text" id="password" name="password" placeholder="e.g. ' OR 1=1 -- " required>
+                </div>
+
+                <div class="payload-tutorial">
+                    <span class="info-icon">i</span>
+                    <p id="tutorial-text">Try injecting <code>' OR '1'='1</code> in the password field to bypass
+                        authentication.</p>
+                </div>
+
+                <button type="submit" class="btn-execute">
+                    <span>Execute Payload</span>
+                    <div class="btn-glow"></div>
+                </button>
+            </form>
+        </section>
+
+        <section class="panel result-panel glass">
+            <h2>Execution Results</h2>
+            <div class="result-box">
+                <div class="query-visualizer">
+                    <h3>Executed Query:</h3>
+                    <code id="sql-query" class="sql-code">/* Select query will appear here */</code>
+                </div>
+
+                <div class="response-container">
+                    <h3>Database Response:</h3>
+                    <div id="error-message" class="error hidden"></div>
+                    <div class="table-responsive">
+                        <table id="results-table" class="hidden">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Salary</th>
+                                    <th>SSN</th>
+                                </tr>
+                            </thead>
+                            <tbody id="results-body">
+                            </tbody>
+                        </table>
+                    </div>
+                    <div id="empty-state" class="empty-state">
+                        <div class="empty-icon">&#128269;</div>
+                        <p>Awaiting payload execution...</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    <script src="script.js"></script>
+</body>
+
+</html>
